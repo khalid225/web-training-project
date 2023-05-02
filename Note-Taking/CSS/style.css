@@ -1,0 +1,732 @@
+Skip to content
+DEV Community
+Search...
+
+Log in
+Create account
+
+0
+Jump to Comments
+1
+Save
+
+Cover image for How to build a Note-Taking App with HTML, CSS, and JavaScript.
+Aliyu Adeniji
+Aliyu Adeniji
+Posted on Apr 10
+
+ 2  
+How to build a Note-Taking App with HTML, CSS, and JavaScript.
+#
+javascript
+#
+programming
+#
+frontend
+#
+webdev
+Introduction.
+Note-taking is a convenient and easy way of keeping and organizing information on the go without the fear of losing your ideas and information. Note-taking apps are tools that take care of this task using web technologies. In this tutorial, you will learn how to build your own note-taking app with HTML, CSS, and a few lines of JavaScript codes.
+
+This app will have functionalities such as creating new notes, editing and updating existing notes, and deleting unneeded notes. You can also display all available notes once you log into the website. It is assumed that you have basic HTML, CSS, and JavaScript knowledge to follow this tutorial and build your note-taking app afterwards.
+
+To get started, we need a UI that will display everything about our note-taking App using HTML and CSS. The HTML code used for the tutorial can be found below;
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InstaNote</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release-pro/v4.0.0/css/line.css">
+</head>
+<body>
+
+    <div class="popup-box">
+        <div class="popup show">
+            <div class="content">
+                <header>
+                    <p>Add a new note</p>
+                    <i class="uil uil-times"></i>
+                </header>
+                <form action="#">
+                    <div class="row tile">
+                        <label>Title</label>
+                        <input type="text" id="input">
+                    </div>
+                    <div class="row description">
+                        <label for="">Description</label>
+                       <textarea name="" id=""></textarea>
+                    </div>
+                    <button class="add-note">Add Note</button>
+                </form>
+            </div>
+        </div>
+    </div>
+<div class="wrapper">
+   <li class="add-box">
+    <div class="icon"><i class="uil uil-plus"></i></div>
+    <p>Add new note</p>
+   </li>
+
+   <li class="note">
+    <div class="details">
+        <p>This is a Title</p>
+        <span>Lorem ipsum dolor sit amet consectetur adipisicing elit. A natus commodi facilis quidem hic molestias, odio consequatur, soluta officia enim delectus adipisci, repellendus et nostrum repudiandae nesciunt. Vitae, ipsa neque?</span>
+    </div>
+
+
+</div>
+<script src="index.js"></script>
+</body>
+</html>
+
+The CSS code used to style this project is also available below;
+@import url('https://fonts.googleapis.com/css?family=poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+body {
+    background: pink;
+}
+
+.wrapper {
+    margin: 50px;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fill, 250px);
+}
+
+.wrapper li {
+    height: 250px;
+    list-style: none;
+    background: white;
+    border-radius: 5px;
+    padding: 15px 20px 20px
+}
+
+.wrapper .note {
+    display: flex;
+    ;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.add-box,
+.icon,
+.bottom-content,
+.settings .menu li,
+.content header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bottom-content span {
+    font-size: 14px;
+}
+
+.add-box {
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.add-box .icon {
+    height: 78px;
+    width: 78px;
+    color: pink;
+    font-size: 40px;
+    border-radius: 50%;
+    justify-content: center;
+    border: 2px dashed pink
+}
+
+.note .details {
+    max-height: 165px;
+    overflow-y: auto;
+}
+
+.note p {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.note span {
+    display: block;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.note .bottom-content {
+    padding-top: 10px;
+    border-top: 1px solid grey;
+}
+
+.bottom-content span {
+    color: grey;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.bottom-content .settings i {
+    cursor: pointer;
+}
+
+.settings {
+    position: relative;
+
+}
+
+.settings .menu {
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0;
+    transform: scale(0);
+    transform-origin: bottom right;
+    transition: transform 0.2s ease;
+    right: -5px;
+    padding: 5px 0;
+    background-color: white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.settings.show .menu {
+
+    transform: scale(1);
+}
+
+.settings .menu li {
+    height: 25px;
+    cursor: pointer;
+    padding: 17px 15px;
+    border-radius: 0;
+    justify-content: flex-start;
+}
+
+.menu li:hover {
+    background: #f5f5f5;
+}
+
+.menu li i {
+    padding-right: 8px;
+}
+
+.popup-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.popup-box,
+.popup-box .popup {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease;
+}
+
+.popup-box.show,
+.popup-box.show .popup {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.popup-box .popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    max-width: 400px;
+    width: 100%;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+}
+
+.popup .content {
+    border-radius: 5px;
+    background: #fff;
+}
+
+.popup .content header {
+    padding: 15px 25px;
+    border-bottom: 1px solid #ccc;
+}
+
+.content header i {
+    color: pink;
+    cursor: pointer;
+}
+
+.content form {
+    margin: 15px 25px 35px;
+
+}
+
+.content form :where(input, textarea) {
+    width: 100%;
+    height: 50px;
+    padding: 0 15px;
+    border-radius: 4px;
+    border: #ccc 1px solid;
+}
+
+.content form .row {
+    margin-bottom: 20px;
+}
+
+.content form textarea {
+    height: 150px;
+    resize: none;
+}
+
+.content form button {
+    width: 100%;
+    height: 50px;
+    background-color: pink;
+    cursor: pointer;
+    color: #000000;
+    margin: 5;
+    border-radius: 4px;
+}
+
+form .row label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+form textarea {
+    height: 150px;
+    resize: none;
+}
+This is how our App will look like, once the HTML and CSS codes are correctly implemented:
+
+new-note
+
+Follow along to add Javascript to our App and make it functional.
+
+The first step in adding functionality to our App is to select all the elements and attributes that will be changed dynamically as we use our App, to do this we can use either document.querySelector(); or getElementById(); to select our elements and attributes.
+const addBox = document.querySelector(".add-box");
+const popUpBox = document.querySelector(".popup-box");
+const closeIcon = document.querySelector("header i");
+const titleTag= document.querySelector("input");
+const descTag= document.querySelector("textarea");
+const addBtn = popUpBox.querySelector("button");
+const popupTitle = document.querySelector("header p");
+After we have made the necessary selections, we create an array of the twelve months of the year that we will use in our App since we can decide to create a note at any point in time, and we need a record of the time we created every single note.
+const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+Let's go ahead and add some JavaScript event listeners to our project. The first event listener we need is the function to add a new note to our App, this will pop up a form that will include a title and a description of our note. The logic behind this event listener is to add the element class of show to the code once the add button is clicked.
+Add the following code snippet to add a new note once the add button is clicked.
+addBox.addEventListener("click", function(){
+   titleTag.focus();
+    popUpBox.classList.add("show")
+});
+This is what we have afterwards;
+
+new-note
+Once we have entered the details of the new note we want to add, we should be able to close the form and return back to the homepage where all our notes will be displayed, we will add another event listener to add this functionality using the code snippet that follows; this event listener will remove the show element that was added earlier when the button is clicked once again.
+closeIcon.addEventListener("click", ()=>{
+    popUpBox.classList.remove("show")
+});
+After we have been able to show our note form, the next step is to be able to get hold of the values of the input of the form which are the title and description of the form, to do this, we will add an event listener to the addBtn so that once it is clicked, the values of the input will be recorded and stored in an array. Then we need a logic to keep track of the dates when a new note is added, we will call a newDate function in this logic, and store this in a variable called dateObj.
+
+Once the details of the new note are recorded, we will store this info in a new variable called noteInfo, this will enable us to keep track of the notes information.
+
+Since we’re storing our data in the local storage of our browser, we will call localStorage.setItem(); as seen in the code block to store our items.
+addBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+     let noteTitle = titleTag.value,
+     noteDesc = descTag.value;
+      if (noteTitle || noteDesc){
+
+
+        let dateObj = new Date(),
+        month = months[dateObj.getMonth()],
+        day = dateObj.getDate(),
+        year = dateObj.getFullYear();
+
+
+        let noteInfo = {
+            title: noteTitle, description: noteDesc,
+            date: `${month} ${day} ${year}`
+        }  
+     if(!isUpdate){
+             notes.push(noteInfo);
+        }else {
+            isUpdate = false;
+            notes[UpdateId] = noteInfo
+        } 
+        localStorage.setItem("notes", JSON.stringify(notes));
+        closeIcon.click()
+        showNotes()
+     }
+});
+We also create a variable called notes that stores all our notes in an array as new notes are being added using the code snippet below since we are using the local storage as our database, we will use localStorage.getItem(); to get this array of our stored notes, if no notes are found in the local storage, an empty array will be passed into the notes variable.
+const notes = JSON.parse(localStorage.getItem("notes") || "[]");
+Now, we create a function called showNotes(); that will our notes once we load our App, we are going to use a template string in this function to dynamically display the values of all the individual details of the notes on our app, use the code below and call the showNotes(); function immediately after the template string is added.
+function showNotes() {
+    document.querySelectorAll(".note").forEach(note => note.remove())
+  notes.forEach((note, index) => {
+    let liTag = `  <li class="note">
+      <div class="details">
+          <p>${note.title}</p>
+          <span>${note.description}</span>
+      </div>
+      <div class="bottom-content">
+          <span>${note.date}</span>
+          <div class="settings">
+            <i onclick="showMenu(this)" class="uil uil-ellipsis-h"></i>
+            <ul class="menu">
+                <li onclick="updateNote(${index}, '${note.title}', '${note.description}')"><i class="uil uil-pen"></i>Edit</li>
+                <li onclick="deleteNote(${index})"><i class="uil uil-trash"></i>Delete</li>
+            </ul>
+        </div>
+      </div>
+     </li>`;
+     addBox.insertAdjacentHTML("afterend", liTag)
+  });
+};
+showNotes(); 
+In the close button, we need to clear the inputs field when the popup is closed, this can be implemented by adding the code snippet below to the close button:
+closeIcon.addEventListener("click", ()=>{
+    titleTag.value = "";
+    descTag.value = "";
+});
+Next, we implement the menu setting, this will enable us to edit or delete a note from the list, we can do this by creating a new function called showMenu(); this will show up once the menu icon is clicked. We will add the class list of the menu element called show also once the menu icon is clicked. And it will be removed whenever any part of the document is clicked.
+function showMenu(elem){
+   elem.parentElement.classList.add("show")
+    document.addEventListener("click", e =>{
+        if(e.target.tagName != "I" || e.target != elem){
+            elem.parentElement.classList.remove("show")
+        }
+    });
+}
+Next we add delete function that will delete a note that we do not wish to have in our notes again, we create a deleteNote(); function. This function will delete the unwanted note, and update the note list in our storage by calling the showNotes(); function.
+function deleteNote(noteId) {
+    let confirmDel = confirm("Are you sure you want to delete this item?");
+    if (!confirmDel) return;
+
+    notes.splice(noteId, 1);
+    localStorage.setItem("notes", JSON.stringify(notes));
+    showNotes();
+}
+Going forward, we may wish to make changes to our notes, perhaps, we want to add some texts to the note or we want to remove some parts of the note, to do this, we create an onClick event listener on the javascript template string on the update button and a function named updateNote(); that will be called once the update button on the settings pane is clicked, create the function with the following code snippet and pass to it, the required parameters.
+function updateNote(noteId, title, desc) {
+    isUpdate = true;
+    UpdateId = noteId;
+    addBox.click();
+    titleTag.value = title;
+    descTag.value = desc;
+    addBtn.innerText = "Update Note";
+    popupTitle.innerText = "Update a Note";
+}
+And finally, we add a confirmation popup to our deleteNote(); function to make sure that we don’t delete our notes by error, add the following code snippet as a variable to the deleteNote(); function.
+confirmDel = confirm("Are you sure you want to delete this item?");
+delete
+After adding notes, our App looks as illustrated below:
+
+notes-ui
+
+Conclusion.
+JavaScript is a powerful programming language that can be used to achieve a lot in technological advances, a Note-Taking App is one important tool that can aid human productivity and focus, in this tutorial, we have successfully built a fully functional Note-Taking App by implementing some JavaScript concepts such as DOM manipulation, event listeners and object-oriented programming.
+
+Going further, you can add other functionalities to your app while improving your JavaScript skills.
+
+Top comments (0)
+
+Subscribe
+pic
+Add to the discussion
+Code of Conduct • Report abuse
+Read next
+rembertdesigns profile image
+Uizard: The AI-Powered Tool for Streamlining Your UX/UI Wireframing
+Richard Rembert - Apr 10
+
+shreyvijayvargiya profile image
+Node.js Roadmap: A Comprehensive Learning Template for Developers
+shrey vijayvargiya - Apr 9
+
+huntereducative profile image
+GPT-4 Demystified: How to stay ahead of the AI revolution
+Hunter Johnson - Apr 6
+
+nectres profile image
+ResponseHunt - Scavenger hunt for programmers ⛏
+Keerthi Vasan - Apr 6
+
+
+Aliyu Adeniji
+Follow
+LOCATION
+Oyo state, Nigeria
+JOINED
+Feb 16, 2022
+More from Aliyu Adeniji
+How to build a countdown timer with JavaScript
+#javascript #webdev #countdown #programming
+How to generate random color hex codes with JavaScript
+#javascript #webdev #programming #beginners
+How to add JavaScript to your Website.
+#javascript #webdev #beginners #programming
+DEV Community
+
+Unlocking Rust’s Power: A Deep Dive into Associated Functions & Methods
+Rustaceans, assemble!
+
+Read full post
+
+@import url('https://fonts.googleapis.com/css?family=poppins:wght@400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'poppins', sans-serif;
+}
+
+body {
+    background: pink;
+}
+
+.wrapper {
+    margin: 50px;
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fill, 250px);
+}
+
+.wrapper li {
+    height: 250px;
+    list-style: none;
+    background: white;
+    border-radius: 5px;
+    padding: 15px 20px 20px
+}
+
+.wrapper .note {
+    display: flex;
+    ;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.add-box,
+.icon,
+.bottom-content,
+.settings .menu li,
+.content header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.bottom-content span {
+    font-size: 14px;
+}
+
+.add-box {
+    flex-direction: column;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.add-box .icon {
+    height: 78px;
+    width: 78px;
+    color: pink;
+    font-size: 40px;
+    border-radius: 50%;
+    justify-content: center;
+    border: 2px dashed pink
+}
+
+.note .details {
+    max-height: 165px;
+    overflow-y: auto;
+}
+
+.note p {
+    font-size: 22px;
+    font-weight: 500;
+}
+
+.note span {
+    display: block;
+    margin-top: 5px;
+    font-size: 16px;
+}
+
+.note .bottom-content {
+    padding-top: 10px;
+    border-top: 1px solid grey;
+}
+
+.bottom-content span {
+    color: grey;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.bottom-content .settings i {
+    cursor: pointer;
+}
+
+.settings {
+    position: relative;
+
+}
+
+.settings .menu {
+    border-radius: 4px;
+    position: absolute;
+    bottom: 0;
+    transform: scale(0);
+    transform-origin: bottom right;
+    transition: transform 0.2s ease;
+    right: -5px;
+    padding: 5px 0;
+    background-color: white;
+    box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
+}
+
+.settings.show .menu {
+
+    transform: scale(1);
+}
+
+.settings .menu li {
+    height: 25px;
+    cursor: pointer;
+    padding: 17px 15px;
+    border-radius: 0;
+    justify-content: flex-start;
+}
+
+.menu li:hover {
+    background: #f5f5f5;
+}
+
+.menu li i {
+    padding-right: 8px;
+}
+
+.popup-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.15);
+}
+
+.popup-box,
+.popup-box .popup {
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s ease;
+}
+
+.popup-box.show,
+.popup-box.show .popup {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.popup-box .popup {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 3;
+    max-width: 400px;
+    width: 100%;
+    justify-content: center;
+    transform: translate(-50%, -50%);
+}
+
+.popup .content {
+    border-radius: 5px;
+    background: #fff;
+}
+
+.popup .content header {
+    padding: 15px 25px;
+    border-bottom: 1px solid #ccc;
+}
+
+.content header i {
+    color: pink;
+    cursor: pointer;
+}
+
+.content form {
+    margin: 15px 25px 35px;
+
+}
+
+.content form :where(input, textarea) {
+    width: 100%;
+    height: 50px;
+    padding: 0 15px;
+    border-radius: 4px;
+    border: #ccc 1px solid;
+}
+
+.content form .row {
+    margin-bottom: 20px;
+}
+
+.content form textarea {
+    height: 150px;
+    resize: none;
+}
+
+.content form button {
+    width: 100%;
+    height: 50px;
+    background-color: pink;
+    cursor: pointer;
+    color: #000000;
+    margin: 5;
+    border-radius: 4px;
+}
+
+form .row label {
+    display: block;
+    margin-bottom: 6px;
+}
+
+form textarea {
+    height: 150px;
+    resize: none;
+}
+DEV Community — A constructive and inclusive social network for software developers. With you every step of your journey.
+
+Home
+Listings
+Podcasts
+Videos
+Tags
+FAQ
+Forem Shop
+Sponsors
+About
+Contact
+Guides
+Software comparisons
+Code of Conduct
+Privacy Policy
+Terms of use
+Built on Forem — the open source software that powers DEV and other inclusive communities.
+
+Made with love and Ruby on Rails. DEV Community © 2016 - 2023.

@@ -1,0 +1,13 @@
+body{
+    background-color: rgb(93, 134, 134);
+}
+hr{
+    width: 5%;
+    border-style: none;
+    border-top: dotted;
+    border-color: white;
+    border-width: 5px;
+}
+h3,h1,h4{
+    color: #a52a2a;
+}

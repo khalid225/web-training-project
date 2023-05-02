@@ -1,0 +1,30 @@
+.main-background{
+    color: white;
+    background-color: red;
+    width: 900px;
+    height: 600px;
+    position: relative;
+}
+.blue-background{
+    background-color: blue;
+    width: 100%;
+    height: 300px;
+    position: absolute;
+    
+    top: 150px;
+}
+.circle{
+    background-color: white;
+    color: black;
+    width: 200px;
+    top: 50px;
+    left: 350px;
+    height: 200px;
+    position: absolute;
+    border-radius: 50%;
+}
+p{
+    margin: 0;
+    text-align: center;
+    font-size: 5rem;
+}

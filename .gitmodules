@@ -1,0 +1,3 @@
+[submodule "web-training-project"]
+	path = web-training-project
+	url = https://github.com/khalid225/web-training-project
